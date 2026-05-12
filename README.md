@@ -10,6 +10,27 @@ Engineering teams use this app to assess the health of their operations across
 10 critical health-check cards. Results are visualised by role, from individual
 engineers up to senior management.
 
+## Screenshots
+
+### Login
+![Login](assets/login.png)
+
+### Dashboard
+![Dashboard](assets/dashboard.png)
+
+### Summary
+![Summary](assets/summary.png)
+
+### Profile
+![Profile](assets/profile.png)
+
+## Tech Stack
+
+- **Backend:** Python 3 / Django 5
+- **Database:** SQLite (via Django ORM)
+- **Frontend:** Bootstrap 5, vanilla JS
+- **Tests:** Django TestCase
+
 ## Features
 
 - **Role-based access control** — Engineer, Team Leader, Department Leader, Senior Manager
@@ -24,13 +45,6 @@ engineers up to senior management.
 - **Superuser admin** — Django admin panel for full CRUD on all data
 - **Avatar initials** — navbar shows user initials, falls back to username initial
 - **20 automated tests** covering authentication, registration, voting, role routing, and profile management
-
-## Tech Stack
-
-- **Backend:** Python 3 / Django 5
-- **Database:** SQLite (via Django ORM)
-- **Frontend:** Bootstrap 5, vanilla JS
-- **Tests:** Django TestCase
 
 ## Setup
 
