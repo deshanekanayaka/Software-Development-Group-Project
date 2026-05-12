@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <title>Register – SKY Health Check</title>
+  <style>
+    body { background:#0c2d5d; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem 0; }
+    .card { border-radius:16px; padding:2rem; min-width:420px; box-shadow:0 8px 40px rgba(0,0,0,.3); }
+    .btn-sky { background:#009de0; color:#fff; border:none; }
+    .btn-sky:hover { background:#007ab5; color:#fff; }
+    #team-group { display:none; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="text-center mb-3">
+    <img src="{% static 'css/images/Sky_Group_logo_2020.svg.png' %}" alt="SKY" style="height:36px" class="mb-2"/>
+    <h4 class="fw-bold" style="color:#0c2d5d">Create Account</h4>
+  </div>
+  {% for msg in messages %}
+    <div class="alert alert-danger py-2 small">{{ msg }}</div>
+  {% endfor %}
+  <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    <div class="row g-2 mb-2">
+      <div class="col"><input type="text" name="first_name" class="form-control" placeholder="First name" required/></div>
+      <div class="col"><input type="text" name="last_name" class="form-control" placeholder="Last name" required/></div>
+    </div>
+    <div class="mb-2"><input type="text" name="username" class="form-control" placeholder="Username" required/></div>
+    <div class="mb-2"><input type="email" name="email" class="form-control" placeholder="Email" required/></div>
+    <div class="mb-2"><input type="password" name="password" class="form-control" placeholder="Password" required/></div>
+    <div class="mb-3"><input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required/></div>
+
+    <div class="mb-2">
+      <label class="form-label fw-semibold">Role</label>
+      <select name="role" id="role" class="form-select" required>
+        <option value="">Select your role…</option>
+        <option value="engineer">Engineer</option>
+        <option value="team_leader">Team Leader</option>
+        <option value="dept_leader">Department Leader</option>
+        <option value="senior_manager">Senior Manager</option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label fw-semibold">Department</label>
+      <select name="department" id="dept" class="form-select">
+        <option value="">— select —</option>
+        {% for d in departments %}<option value="{{ d.pk }}">{{ d.name }}</option>{% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3" id="team-group">
+      <label class="form-label fw-semibold">Team</label>
+      <select name="team" id="team" class="form-select">
+        <option value="">— select department first —</option>
+        {% for t in teams %}<option value="{{ t.pk }}" data-dept="{{ t.department_id }}">{{ t.name }}</option>{% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-sky-login w-100 py-2 fw-semibold">Create Account</button>
+  </form>
+  <p class="text-center mt-3 mb-0 small">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+</div>
+<script>
+const roleEl = document.getElementById('role');
+const deptEl = document.getElementById('dept');
+const teamEl = document.getElementById('team');
+const teamGrp = document.getElementById('team-group');
+
+function filterTeams() {
+  const selectedDept = deptEl.value;
+  Array.from(teamEl.options).forEach(o => {
+    if (!o.value) return;
+    o.style.display = (o.dataset.dept === selectedDept || !selectedDept) ? '' : 'none';
+  });
+}
+
+roleEl.addEventListener('change', () => {
+  const role = roleEl.value;
+  teamGrp.style.display = (role === 'engineer' || role === 'team_leader') ? 'block' : 'none';
+});
+deptEl.addEventListener('change', filterTeams);
+</script>
+</body>
+</html>

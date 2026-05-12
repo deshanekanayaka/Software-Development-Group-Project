@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Team Leader Dashboard{% endblock %}
+{% block extra_head %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock %}
+{% block content %}
+<div class="row mb-3 align-items-center">
+  <div class="col">
+    <h4 class="fw-bold text-primary">Team Leader Dashboard</h4>
+    <small class="text-muted">{{ profile.get_role_display }} — {{ team }}</small>
+  </div>
+  <div class="col-auto">
+    <form method="GET" class="d-flex gap-2">
+      <select name="session" class="form-select form-select-sm">
+        <option value="">— select session —</option>
+        {% for s in sessions %}<option value="{{ s.pk }}" {% if selected_session.pk == s.pk %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+      </select>
+      <button class="btn btn-primary btn-sm">Load</button>
+    </form>
+  </div>
+</div>
+
+{% if selected_session and team_summary %}
+<div class="card card-shadow p-4 mb-4">
+  <h6 class="fw-bold mb-3">{{ team }} — {{ selected_session.name }} Team Summary</h6>
+  <div class="row g-3">
+    {% for card_id, ts in team_summary.items %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card border p-3">
+        <div class="fw-semibold small mb-2">{{ ts.card.title }}</div>
+        {% if ts.total %}
+        <div class="d-flex gap-1 mb-1">
+          <div class="bg-success text-white rounded px-2 small">{{ ts.green }}</div>
+          <div class="bg-warning text-dark rounded px-2 small">{{ ts.amber }}</div>
+          <div class="bg-danger text-white rounded px-2 small">{{ ts.red }}</div>
+          <span class="text-muted small ms-auto">{{ ts.total }} votes</span>
+        </div>
+        <!-- mini bar -->
+        <div class="d-flex" style="height:8px; border-radius:4px; overflow:hidden">
+          {% if ts.green %}<div style="flex:{{ ts.green }}; background:#28a745"></div>{% endif %}
+          {% if ts.amber %}<div style="flex:{{ ts.amber }}; background:#ffc107"></div>{% endif %}
+          {% if ts.red %}<div style="flex:{{ ts.red }}; background:#dc3545"></div>{% endif %}
+        </div>
+        {% else %}
+        <span class="text-muted small">No votes yet</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% elif selected_session %}
+<div class="alert alert-info">No votes recorded for this session yet.</div>
+{% else %}
+<div class="text-center text-muted mt-5">Select a session to view team data.</div>
+{% endif %}
+
+<!-- Own voting section -->
+<div class="card card-shadow p-4">
+  <h6 class="fw-bold mb-2">Vote as Team Leader</h6>
+  <p class="text-muted small">Team leaders also vote. Select a session and start your health check.</p>
+  {% if selected_session %}
+  <a href="{% url 'vote_card' selected_session.pk cards.first.pk %}" class="btn btn-success btn-sm">Start / Resume Voting</a>
+  {% endif %}
+</div>
+{% endblock %}

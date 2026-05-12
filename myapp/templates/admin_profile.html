@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>Admin Profile</title>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav
+      class="navbar navbar-expand-md navbar-light pt-1 pb-1 mx-5 mt-3 rounded-2"
+    >
+      <div class="container-xxl">
+        <a class="navbar-brand" href="#intro"> </a>
+        <img src="{% static 'images/logo.png' %}" alt="" width="50" height="30" class="logo" />
+        <!-- navbar links -->
+        <div
+          class="collapse navbar-collapse justify-content-end align-center"
+          id="main-nav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="{% url 'votingPage' %}">VOTE</a>
+            </li>
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="{% url 'landingPage' %}">HOME</a>
+            </li>
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="profile/admin_profile/">PROFILE</a>
+            </li>
+            <li class="nav-item mx-4">
+              <a class="nav-link" href="{% url 'loginSelection' %}">SIGN IN</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section class="main-container">
+      <div class="main-div">
+        <!-- Left -->
+        <section class="left">
+          <div class="image-div">
+            <img
+              src="assets/adminProfileIcon.png"
+              alt="Admin Profile Image"
+              class="avatar"
+            />
+          </div>
+          <!-- Profile Name -->
+          <div class="profile-name">
+            <span class="text-light">username</span>
+            <span class="text-light">mark123</span>
+          </div>
+        </section>
+        <!-- Right -->
+        <section class="right">
+          <div>
+            <h3>Profile</h3>
+          </div>
+          <div>
+            <span>Name</span>
+            <span class="name">Mark Matthews</span>
+          </div>
+          <div>
+            <span>Email</span>
+            <span class="name">markmatthews@sky.com</span>
+          </div>
+          <div>
+            <span>Code</span>
+            <span class="name">Adm01</span>
+          </div>
+          <div>
+            <span>Role</span>
+            <span class="name">Admin</span>
+          </div>
+        </section>
+      </div>
+      <!-- Button Tab -->
+      <section class="button-tab">
+        <a class="edit" href="editProfile.html">Edit Profile</a>
+        <a class="dashboard" href="dashboard.html">Dashboard</a>
+      </section>
+    </section>
+  </body>
+</html>

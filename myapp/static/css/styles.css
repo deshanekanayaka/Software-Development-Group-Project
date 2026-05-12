@@ -1,0 +1,161 @@
+/* ============================================================
+   SKY Health Check – Design System
+   ============================================================ */
+
+:root {
+  --sky-blue:    #0c2d5d;
+  --sky-accent:  #009de0;
+  --sky-purple:  #8b19d6;  /* kept for login/register only */
+  --sky-light:   #f4f6fb;
+  --sky-white:   #ffffff;
+  --font-family: "Barlow", "Segoe UI", sans-serif;
+}
+
+/* ── Reset: prevent original styles bleeding into app ──────── */
+html {
+  background: var(--sky-light);
+}
+
+body {
+  background: var(--sky-light);
+  font-family: var(--font-family);
+  line-height: 1.6;
+  color: #1a1a2e;
+  min-height: 100vh;
+}
+
+/* ── Navbar ─────────────────────────────────────────────────── */
+.sky-nav {
+  background: var(--sky-blue) !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0.5rem 2rem;
+}
+
+.sky-nav .navbar-brand {
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+.sky-nav .nav-link {
+  color: rgba(255,255,255,0.8) !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sky-nav .nav-link:hover,
+.sky-nav .nav-link.active {
+  color: #fff !important;
+  background: rgba(255,255,255,0.12);
+}
+
+.sky-nav .dropdown-toggle::after {
+  vertical-align: middle;
+}
+
+.sky-nav .dropdown-menu {
+  background: var(--sky-blue);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  margin-top: 0.25rem;
+}
+
+.sky-nav .dropdown-item {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+}
+
+.sky-nav .dropdown-item:hover {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+.sky-nav .dropdown-divider {
+  border-color: rgba(255,255,255,0.15);
+}
+
+.navbar-brand-logo {
+  height: 28px;
+  width: auto;
+}
+
+/* ── Buttons – SKY blue palette, no purple ──────────────────── */
+.btn-primary {
+  background-color: var(--sky-accent) !important;
+  border-color: var(--sky-accent) !important;
+  color: #fff !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #007ab5 !important;
+  border-color: #007ab5 !important;
+}
+
+.btn-success {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+.btn-success:hover {
+  background-color: #1e7e34 !important;
+}
+
+.btn-outline-primary {
+  color: var(--sky-accent) !important;
+  border-color: var(--sky-accent) !important;
+}
+.btn-outline-primary:hover {
+  background-color: var(--sky-accent) !important;
+  color: #fff !important;
+}
+
+/* Login/register pages keep the purple brand button */
+.btn-sky-login {
+  background: linear-gradient(135deg, #8b19d6, #009de0);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+.btn-sky-login:hover {
+  opacity: 0.88;
+  color: #fff;
+}
+
+/* ── Cards ──────────────────────────────────────────────────── */
+.card-shadow {
+  box-shadow: 0 2px 14px rgba(12,45,93,.08);
+  border: 1px solid rgba(12,45,93,.07) !important;
+  border-radius: 12px;
+}
+
+/* ── Health check traffic lights ────────────────────────────── */
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.dot-green  { background: #28a745; }
+.dot-amber  { background: #ffc107; }
+.dot-red    { background: #dc3545; }
+
+.vote-pill-green { background:#28a745; color:#fff; border-radius:20px; padding:2px 10px; font-size:.8rem; }
+.vote-pill-amber { background:#ffc107; color:#000; border-radius:20px; padding:2px 10px; font-size:.8rem; }
+.vote-pill-red   { background:#dc3545; color:#fff; border-radius:20px; padding:2px 10px; font-size:.8rem; }
+
+/* ── Logo image ─────────────────────────────────────────────── */
+.logo {
+  height: 28px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* ── Utility ────────────────────────────────────────────────── */
+.text-sky { color: var(--sky-accent) !important; }
+.bg-sky   { background: var(--sky-blue) !important; }

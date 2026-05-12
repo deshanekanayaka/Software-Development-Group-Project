@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Department Leader Dashboard{% endblock %}
+{% block content %}
+<div class="row mb-3 align-items-center">
+  <div class="col">
+    <h4 class="fw-bold text-primary">Department Dashboard — {{ department }}</h4>
+    <small class="text-muted">Department Leader</small>
+  </div>
+  <div class="col-auto">
+    <form method="GET" class="d-flex gap-2">
+      <select name="session" class="form-select form-select-sm">
+        <option value="">— select session —</option>
+        {% for s in sessions %}<option value="{{ s.pk }}" {% if selected_session.pk == s.pk %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+      </select>
+      <button class="btn btn-primary btn-sm">Load</button>
+    </form>
+  </div>
+</div>
+
+{% if selected_session %}
+  <!-- Teams in department -->
+  {% if teams_data %}
+  <div class="mb-4">
+    <h6 class="fw-bold mb-3">Teams in {{ department }} — {{ selected_session.name }}</h6>
+    {% for td in teams_data %}
+    <div class="card card-shadow p-3 mb-3">
+      <div class="fw-bold mb-2">{{ td.team.name }}</div>
+      <div class="row g-2">
+        {% for cs in td.cards %}
+        <div class="col-md-3 col-6">
+          <div class="small fw-semibold">{{ cs.card.title }}</div>
+          {% if cs.total %}
+          <div class="d-flex gap-1 mt-1">
+            <span class="badge bg-success">{{ cs.green }}</span>
+            <span class="badge bg-warning text-dark">{{ cs.amber }}</span>
+            <span class="badge bg-danger">{{ cs.red }}</span>
+          </div>
+          {% else %}<span class="text-muted small">No votes</span>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info">No data for this session.</div>
+  {% endif %}
+
+  <!-- Other departments (summary only) -->
+  {% if other_depts %}
+  <div class="card card-shadow p-4">
+    <h6 class="fw-bold mb-3">Other Departments — Summary Only</h6>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead><tr><th>Department</th><th>🟢 Green</th><th>🟡 Amber</th><th>🔴 Red</th><th>Total</th></tr></thead>
+        <tbody>
+          {% for od in other_depts %}
+          <tr>
+            <td>{{ od.dept.name }}</td>
+            <td>{{ od.green }}</td>
+            <td>{{ od.amber }}</td>
+            <td>{{ od.red }}</td>
+            <td>{{ od.total }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+{% else %}
+<div class="text-center text-muted mt-5">Select a session to view data.</div>
+{% endif %}
+{% endblock %}

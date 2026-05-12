@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Senior Manager Dashboard{% endblock %}
+{% block content %}
+<div class="row mb-3 align-items-center">
+  <div class="col"><h4 class="fw-bold text-primary">Senior Manager Dashboard</h4></div>
+  <div class="col-auto">
+    <form method="GET" class="d-flex gap-2 align-items-end">
+      <div>
+        <label class="form-label small mb-1">Session</label>
+        <select name="session" class="form-select form-select-sm">
+          <option value="">— select —</option>
+          {% for s in sessions %}<option value="{{ s.pk }}" {% if selected_session.pk == s.pk %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="form-label small mb-1">Team Detail</label>
+        <select name="team" class="form-select form-select-sm">
+          <option value="">— none —</option>
+          {% for t in all_teams %}<option value="{{ t.pk }}" {% if selected_team.pk == t.pk %}selected{% endif %}>{{ t.name }} ({{ t.department.name }})</option>{% endfor %}
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm">Load</button>
+    </form>
+  </div>
+</div>
+
+{% if selected_session %}
+  <!-- All departments -->
+  <div class="row g-3 mb-4">
+    {% for dd in depts_data %}
+    <div class="col-lg-4">
+      <div class="card card-shadow p-3 h-100">
+        <div class="fw-bold mb-2">{{ dd.dept.name }}</div>
+        <div class="d-flex gap-2 mb-2">
+          <span class="badge bg-success">{{ dd.green }} G</span>
+          <span class="badge bg-warning text-dark">{{ dd.amber }} A</span>
+          <span class="badge bg-danger">{{ dd.red }} R</span>
+          <span class="badge bg-secondary">{{ dd.total }} total</span>
+        </div>
+        <div class="small">
+          {% for ts in dd.teams %}
+          <div class="d-flex justify-content-between py-1 border-bottom">
+            <span>{{ ts.team.name }}</span>
+            <div class="d-flex gap-1">
+              <span class="badge bg-success badge-sm">{{ ts.green }}</span>
+              <span class="badge bg-warning text-dark badge-sm">{{ ts.amber }}</span>
+              <span class="badge bg-danger badge-sm">{{ ts.red }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Team drill-down -->
+  {% if team_detail %}
+  <div class="card card-shadow p-4">
+    <h6 class="fw-bold mb-3">{{ selected_team.name }} — Card Breakdown</h6>
+    <div class="row g-2">
+      {% for td in team_detail %}
+      <div class="col-md-4 col-6">
+        <div class="card border p-3">
+          <div class="fw-semibold small mb-2">{{ td.card.title }}</div>
+          {% if td.total %}
+          <div class="d-flex gap-1">
+            <span class="badge bg-success">{{ td.green }}</span>
+            <span class="badge bg-warning text-dark">{{ td.amber }}</span>
+            <span class="badge bg-danger">{{ td.red }}</span>
+            <span class="text-muted ms-auto small">{{ td.total }}</span>
+          </div>
+          {% else %}<span class="text-muted small">No votes</span>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+{% else %}
+<div class="text-center text-muted mt-5">Select a session to view organisation-wide data.</div>
+{% endif %}
+{% endblock %}
